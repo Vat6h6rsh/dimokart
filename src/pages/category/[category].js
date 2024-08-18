@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/router';
 import Enav from '../../components/navbar';
-import products from '../../components/products';
+import Eproducts from '../../components/products';
 
 export default function CategoryPage() {
   const router = useRouter();

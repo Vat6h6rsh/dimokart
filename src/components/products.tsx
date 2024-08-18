@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image'
 import Link from 'next/link';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
@@ -21,17 +22,18 @@ export default function Eproducts({ category }: EproductsProps) {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const limit = 10;
-      const skip = (currentPage - 1) * limit;
-      try {
-        const response = await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}&category=${category}`);
-        const data = await response.json();
-        setProducts(data.products);
-        setTotalPages(Math.ceil(data.total / limit));
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
+        const limit = 10;
+        const skip = (currentPage - 1) * limit;
+        try {
+          const response = await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}&category=${category}`);
+          const data = await response.json();
+          setProducts(data.products || []);
+          setTotalPages(Math.ceil(data.total / limit)); // Ensure 'data.total' exists
+        } catch (error) {
+          console.error('Error fetching products:', error);
+        }
+      };
+      
 
     fetchProducts();
   }, [currentPage, category]);
@@ -48,9 +50,11 @@ export default function Eproducts({ category }: EproductsProps) {
         {products.map((product) => (
           <Link href={`/product/${product.id}`} key={product.id} className="group">
             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200">
-              <img
+              <Image
                 alt={product.title}
                 src={product.images[0]}
+                width= {300}
+                height={450}
                 className="h-48 w-full object-cover object-center group-hover:opacity-75"
               />
             </div>

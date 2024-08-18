@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image'
 import { useState, useEffect } from 'react';
 import {
   Dialog,
@@ -25,9 +26,13 @@ export default function Enav() {
   useEffect(() => {
     fetch('https://dummyjson.com/products/category-list')
       .then((res) => res.json())
-      .then((data) => setCategories(data))
+      .then((data) => {
+        // Transform data to match expected format if needed
+        setCategories(data); // Assuming 'data' is in the expected format
+      })
       .catch((error) => console.error('Error fetching categories:', error));
   }, []);
+  
 
   interface Section {
     id: string;
@@ -213,9 +218,11 @@ export default function Enav() {
 
                 <div className="hidden lg:ml-8 lg:flex">
                   <span href="#" className="flex items-center text-gray-700 hover:text-gray-800">
-                    <img
-                      alt=""
+                    <Image
+                      alt="canada flag"
                       src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      width={30}
+                      height={20}
                       className="block h-auto w-5 flex-shrink-0"
                     />
                     <span className="ml-3 text-sm font-medium">CAD</span>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as solidStar, faStar as regularStar } from '@fortawesome/free-solid-svg-icons';
 import Enav from '../../components/navbar';
+import Image from 'next/image';
 
 export default function ProductPage() {
   const router = useRouter();
@@ -73,25 +74,27 @@ export default function ProductPage() {
           {/* Image gallery */}
           <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
             <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-              <img
+              <Image
                 src={product.images[0]}
                 alt={product.title}
+                width={600} // Example width, adjust as needed
+                height={600} // Example height, adjust as needed
                 className="h-full w-full object-cover object-center"
               />
             </div>
-            <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-              {product.images.slice(1, 3).map((img, index) => (
-                <div key={index} className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-                  <img
-                    src={img}
-                    alt={`${product.title} ${index + 1}`}
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
-              ))}
-            </div>
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
+  <div className="lg:col-span-2">
+    <Image src={product.images[0]} alt={product.title} className="w-full object-cover rounded-lg" />
+  </div>
+  <div className="lg:col-span-1 flex flex-col gap-4">
+    {product.images.slice(1, 4).map((img, index) => (
+      <Image key={index} src={img} alt={`${product.title} ${index + 1}`} className="w-full object-cover rounded-lg" />
+    ))}
+  </div>
+</div>
+
             <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-              <img
+              <Image
                 src={product.images[3]}
                 alt={product.title}
                 className="h-full w-full object-cover object-center"
